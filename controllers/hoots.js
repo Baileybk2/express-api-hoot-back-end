@@ -21,5 +21,17 @@ router.post("/", async (req, res) => {
     res.status(500).json(error)
   }
 })
+// same with this route
+router.get("/", async (req, res) => {
+  try {
+    // the find method will look for ALL instances of that model if you provide the find() method with an empty object
+    const hoots = await Hoot.find({})
+      .populate("author")
+      .sort({ createdAt: "desc" })
+    res.status(200).json(hoots)
+  } catch (error) {
+    res.status(500).json(error)
+  }
+})
 
 module.exports = router
