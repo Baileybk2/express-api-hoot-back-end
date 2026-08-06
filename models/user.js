@@ -1,22 +1,27 @@
 const mongoose = require("mongoose")
 
 const userSchema = new mongoose.Schema({
-  username: {
-    type: String,
-    unique: true,
-    required: true,
-  },
-  hashedPassword: {
-    type: String,
-    required: true,
-  },
+    username: {
+        type: String,
+        unique: true,
+        required: true,
+    },
+    hashedPassword: {
+        type: String,
+        required: true,
+    },
+    alert: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Alert',
+        default: null,
+    }
 })
 
 // this code transforms the response so the hashed password is not included
 userSchema.set("toJSON", {
-  transform: (document, returnedObject) => {
-    delete returnedObject.hashedPassword
-  },
+    transform: (document, returnedObject) => {
+        delete returnedObject.hashedPassword
+    },
 })
 
 module.exports = mongoose.model("User", userSchema)
